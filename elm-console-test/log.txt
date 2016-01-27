@@ -1,0 +1,77 @@
+~/W/e/elm-console-test git:master ❯❯❯ elm package install laszlopandy/elm-console                                                                       ⏎ ◼
+To install laszlopandy/elm-console I would like to add the following
+dependency to elm-package.json:
+
+    "laszlopandy/elm-console": "1.1.0 <= v < 2.0.0"
+
+May I add that to elm-package.json for you? (y/n) y
+
+Some new packages are needed. Here is the upgrade plan.
+
+  Install:
+    laszlopandy/elm-console 1.1.0
+
+Do you approve of this plan? (y/n) y
+Downloading laszlopandy/elm-console
+Packages configured successfully!
+~/W/e/elm-console-test git:master ❯❯❯ elm make Main.elm                                                                                                   ◼
+Success! Compiled 36 modules.
+Successfully generated index.html
+~/W/e/elm-console-test git:master ❯❯❯ ls                                                                                                                  ◼
+Main.elm         elm-package.json elm-stuff        index.html
+~/W/e/elm-console-test git:master ❯❯❯ ls                                                                                                                  ◼
+Main.elm         elm-package.json elm-stuff        index.html
+~/W/e/elm-console-test git:master ❯❯❯ ls elm-stuff                                                                                                        ◼
+build-artifacts         exact-dependencies.json packages
+~/W/e/elm-console-test git:master ❯❯❯ ls elm-stuff/packages                                                                                               ◼
+elm-lang    laszlopandy
+~/W/e/elm-console-test git:master ❯❯❯ ls elm-stuff/packages/laszlopandy                                                                                   ◼
+elm-console
+~/W/e/elm-console-test git:master ❯❯❯ ls elm-stuff/packages/laszlopandy/elm-console                                                                       ◼
+1.1.0
+~/W/e/elm-console-test git:master ❯❯❯ ls elm-stuff/packages/laszlopandy/elm-console/1.1.0                                                                 ◼
+LICENSE          README.md        elm-io.sh        elm-package.json src              test
+~/W/e/elm-console-test git:master ❯❯❯ ./elm-stuff/packages/laszlopandy/elm-console/1.1.0/elm-io.sh test.js test.js                                        ◼
+zsh: permission denied: ./elm-stuff/packages/laszlopandy/elm-console/1.1.0/elm-io.sh
+~/W/e/elm-console-test git:master ❯❯❯ elm make Main.elm --warn --output=raw-test.js                                                                     ⏎ ◼
+=================================== WARNINGS ===================================
+
+-- unused import ------------------------------------------------------ Main.elm
+
+Module `List` is unused.
+
+6│ import List
+   ^^^^^^^^^^^
+Best to remove it. Don't save code quality for later!
+
+-- unused import ------------------------------------------------------ Main.elm
+
+Module `Maybe` is unused.
+
+7│ import Maybe
+   ^^^^^^^^^^^^
+Best to remove it. Don't save code quality for later!
+
+-- unused import ------------------------------------------------------ Main.elm
+
+Module `String` is unused.
+
+8│ import String
+   ^^^^^^^^^^^^^
+Best to remove it. Don't save code quality for later!
+
+Success! Compiled 1 modules.
+Successfully generated raw-test.js
+~/W/e/elm-console-test git:master ❯❯❯ ./elm-stuff/packages/laszlopandy/elm-console/1.1.0/elm-io.sh raw-test.js test.js                                    ◼
+zsh: permission denied: ./elm-stuff/packages/laszlopandy/elm-console/1.1.0/elm-io.sh
+~/W/e/elm-console-test git:master ❯❯❯ sudo ./elm-stuff/packages/laszlopandy/elm-console/1.1.0/elm-io.sh raw-test.js test.js                             ⏎ ◼
+Password:
+sudo: ./elm-stuff/packages/laszlopandy/elm-console/1.1.0/elm-io.sh: command not found
+~/W/e/elm-console-test git:master ❯❯❯ cp ./elm-stuff/packages/laszlopandy/elm-console/1.1.0/elm-io.sh .                                                 ⏎ ◼
+~/W/e/elm-console-test git:master ❯❯❯ chmod +x elm-io.sh                                                                                                  ◼
+~/W/e/elm-console-test git:master ❯❯❯ ./elm-io.sh raw-test.js test.js                                                                                     ◼
+~/W/e/elm-console-test git:master ❯❯❯ node test.js                                                                                                        ◼
+Hello, Console!
+I'll echo your input until you say "exit":
+test
+test
