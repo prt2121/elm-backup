@@ -1,12 +1,10 @@
-module MouseSignals1 where
+module Pi where
 
 import Color exposing (..)
 import Graphics.Collage exposing (..)
 import Graphics.Element exposing (..)
-import Signal exposing (map, merge)
+import Signal exposing (foldp, map, map2)
 import Random exposing (generate, float)
-import Signal
-import String
 import Window
 import Time exposing (inMilliseconds, every, millisecond )
 
@@ -15,36 +13,39 @@ type alias Point = { x:Float, y:Float }
 
 initState = ((0,[]), (0,[]))
 
-states : Signal.Signal State
-states = Signal.foldp upstate initState signalPoint
+states : Signal State
+states = foldp upstate initState signalPoint
 
-view : Signal.Signal State -> Signal.Signal (List Form)
+view : Signal State -> Signal (List Form)
 view =
   let
     f ((hits, ps), (misses, qs)) =
       (pointsToCircles lightGreen ps)
       ++ (pointsToCircles lightRed qs)
   in
-    Signal.map f
+    map f
 
 background : List Form
-background = [ square 512
+background =
+  [ square 512
         |> filled clearGrey
       ,circle 256
         |> filled (rgba 255 255 255 1)
     ]
 
-myPi : Signal.Signal State -> Signal Element
+myPi : Signal State -> Signal Element
 myPi =
   let
-    f ((hits, _), (misses, _)) = 4 * (toFloat hits)/(toFloat (hits + misses)) |> show
+    f ((hits, _), (misses, _)) =
+      4 * (toFloat hits)/(toFloat (hits + misses))
+        |> show
   in
-    Signal.map f
+    map f
 
-toList : Signal.Signal (List Element)
-toList = Signal.map2 (\e1 e2 -> [e1, e2]) (myPi states) (map ((\f -> background ++ f) >> collage 512 512) (view states))
+toList : Signal (List Element)
+toList = map2 (\e1 e2 -> [e1, e2]) (myPi states) (map ((\f -> background ++ f) >> collage 512 512) (view states))
 
-main : Signal.Signal Element
+main : Signal Element
 main = map (flow down) toList
 
 -- x and y must satisfy (x - center_x)^2 + (y - center_y)^2 < radius^2
@@ -69,10 +70,10 @@ lightGreen : Color
 lightGreen =
   rgba 0 200 0 0.4
 
-pointsToCircles : Color.Color -> List Point -> List Form
+pointsToCircles : Color -> List Point -> List Form
 pointsToCircles c ps = List.map (pointsToCircle c) ps
 
-pointsToCircle : Color.Color -> Point -> Form
+pointsToCircle : Color -> Point -> Form
 pointsToCircle c p = circle 4
                       |> filled c
                       |> move (p.x,p.y)
@@ -85,8 +86,8 @@ genPoint s =
   in
       ({x=x',y=y'}, s'')
 
-timeSeed : Signal.Signal Int
-timeSeed = Signal.map (inMilliseconds >> round) (every millisecond)
+timeSeed : Signal Int
+timeSeed = map (inMilliseconds >> round) (every millisecond)
 
 signalPointSeed : Signal (Point, Random.Seed)
 signalPointSeed =
@@ -94,7 +95,7 @@ signalPointSeed =
     f : Int -> (Point, Random.Seed) -> (Point, Random.Seed)
     f i s = genPoint (snd s)
   in
-    Signal.foldp f ({x=0,y=0}, Random.initialSeed 0) timeSeed
+    foldp f ({x=0,y=0}, Random.initialSeed 0) timeSeed
 
 signalPoint : Signal Point
 signalPoint = map fst signalPointSeed
