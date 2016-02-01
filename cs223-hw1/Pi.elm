@@ -37,7 +37,7 @@ background = [ square 512
 myPi : Signal.Signal State -> Signal Element
 myPi =
   let
-    f ((hits, _), (misses, _)) = (toFloat hits)/(toFloat misses) |> show
+    f ((hits, _), (misses, _)) = 4 * (toFloat hits)/(toFloat (hits + misses)) |> show
   in
     Signal.map f
 
