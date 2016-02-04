@@ -9,41 +9,41 @@ testSuite =
     "About Comparison Operators"
     [ test
         "== tests for equality"
-        (assert (1 == xNum))
+        (assert (1 == 1))
     , test
         "/= tests for inequality"
-        (assert (1 /= 1))
+        (assert (1 /= 2))
     , test
         "< tests for less than"
-        (assert (1 < xNum))
+        (assert (1 < 2))
     , test
         "<= tests for less than or equal to"
-        (assert (1 <= xNum))
+        (assert (1 <= 1))
     , test
         "> tests for greater than"
-        (assert (xNum > 1))
+        (assert (2 > 1))
     , test
         ">= tests for greater than or equal to"
-        (assert (xNum >= 1))
+        (assert (1 >= 1))
     , test
         "Floats are comparable"
-        (assert (xNum >= 1.5))
+        (assert (2.0 >= 1.5))
     , test
         "Strings are comparable"
-        (assert ("A string" == xString))
+        (assert ("A string" == "A string"))
     , test
         "Chars are comparable"
-        (assert ('a' == xChar))
+        (assert ('a' == 'a'))
     , test
         "max returns the maximum of two comparables"
-        (assertEqual xNum (max 1 2))
+        (assertEqual 2 (max 1 2))
     , test
         "min returns the minimum of two comparables"
-        (assertEqual xNum (min 1 2))
+        (assertEqual 1 (min 1 2))
     , test
         "compare returns an Order"
-        (assertEqual EQ (compare 1 2))
+        (assertEqual LT (compare 1 2))
     , test
         "functions can be made infix with ``"
-        (assertEqual EQ (2 `compare` 1))
+        (assertEqual GT (2 `compare` 1))
     ]
