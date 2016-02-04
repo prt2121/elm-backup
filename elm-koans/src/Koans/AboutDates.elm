@@ -35,25 +35,25 @@ testSuite =
     "About Dates"
     [ test
         "year gets the year"
-        (assertEqual xNum (Date.year ourDate))
+        (assertEqual 1969 (Date.year ourDate))
     , test
         "month gets the month"
-        (assertEqual xMonth (Date.month ourDate))
+        (assertEqual Date.Dec (Date.month ourDate))
       -- a type!
     , test
         "day gets the day"
-        (assertEqual xNum (Date.day ourDate))
+        (assertEqual 31 (Date.day ourDate))
     , test
         "dayOfWeek gets the day of the week"
-        (assertEqual xDay (Date.dayOfWeek ourDate))
+        (assertEqual Date.Wed (Date.dayOfWeek ourDate))
       -- another type
     , test
         "hour gets the hour"
-        (assertEqual xString (getField Date.hour parsedDate))
+        (assertEqual "11" (getField Date.hour parsedDate))
     , test
         "minute gets the minute"
-        (assertEqual xString (getField Date.minute parsedDate))
+        (assertEqual "30" (getField Date.minute parsedDate))
     , test
         "second gets the second"
-        (assertEqual xString (getField Date.second parsedDate))
+        (assertEqual "45" (getField Date.second parsedDate))
     ]
