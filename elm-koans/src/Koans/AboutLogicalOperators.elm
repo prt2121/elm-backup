@@ -9,14 +9,14 @@ testSuite =
     "About Logical Operators"
     [ test
         "not negates a boolean"
-        (assertEqual False (not xBool))
+        (assertEqual False (not True))
     , test
         "&& is a logical AND"
-        (assert (True && xBool))
+        (assert (True && True))
     , test
         "|| is a logical OR"
-        (assert (False || xBool))
+        (assert (False || True))
     , test
         "xor is a logical XOR"
-        (assert (False `xor` xBool))
+        (assert (False `xor` True))
     ]
