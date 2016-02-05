@@ -13,14 +13,14 @@ testSuite =
     "About Records"
     [ test
         "a record is a set of named fields"
-        (assertEqual { x = xNum, y = xNum } { x = 1, y = 2 })
+        (assertEqual { x = 1, y = 2 } { x = 1, y = 2 })
     , test
         "you can access a field with dot notation"
-        (assertEqual xNum point.x)
+        (assertEqual 1 point.x)
     , test
         "the dot notation may also be used as a function"
-        (assertEqual xNum (.y { x = 1, y = 2 }))
+        (assertEqual 2 (.y { x = 1, y = 2 }))
     , test
         "fields may be updated"
-        (assertEqual point { point | x = 3 })
+        (assertEqual { x = 3, y = 2 } { point | x = 3 })
     ]
