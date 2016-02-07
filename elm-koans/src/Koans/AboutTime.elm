@@ -10,20 +10,20 @@ testSuite =
     "About Time"
     [ test
         "time is just a Float"
-        (assertEqual xTime 123.45)
+        (assertEqual 123.45 123.45)
     , test
         "a constant exists for hour"
-        (assertEqual xTime (1 * Time.hour))
+        (assertEqual 3600000 (1 * Time.hour))
     , test
         "and minute"
-        (assertEqual xTime (1 * Time.minute))
+        (assertEqual 60000 (1 * Time.minute))
     , test
         "and second"
-        (assertEqual xTime (1 * Time.second))
+        (assertEqual 1000 (1 * Time.second))
     , test
         "and millisecond"
-        (assertEqual xTime (1 * Time.millisecond))
+        (assertEqual 1 (1 * Time.millisecond))
     , test
         "helpers exist to convert back to Floats"
-        (assertEqual xNum (Time.inSeconds 1000))
+        (assertEqual 1 (Time.inSeconds 1000))
     ]
