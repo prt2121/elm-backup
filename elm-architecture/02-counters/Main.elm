@@ -1,3 +1,5 @@
+module Main (..) where
+
 import CounterPair exposing (init, update, view)
 import StartApp.Simple exposing (start)
 
