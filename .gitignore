@@ -9,3 +9,6 @@ cabal-dev
 cabal.sandbox.config
 .DS_Store
 *~
+elm-io.sh
+raw-test.js
+test.js

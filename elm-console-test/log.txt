@@ -1,3 +1,12 @@
+~/W/e/elm-console-test git:master λ →  elm make Main.elm --warn --output=raw-test.js                                                                                                                ⏎ ✱ ◼
+Success! Compiled 1 modules.
+Successfully generated raw-test.js
+~/W/e/elm-console-test git:master λ →  ./elm-io.sh raw-test.js test.js                                                                                                                                ✱ ◼
+~/W/e/elm-console-test git:master λ →  node test.js                                                                                                                                                   ✱ ◼
+Hello, Console!
+I'll echo your input until you say "exit":
+λ>
+
 ~/W/e/elm-console-test git:master ❯❯❯ elm package install laszlopandy/elm-console                                                                       ⏎ ◼
 To install laszlopandy/elm-console I would like to add the following
 dependency to elm-package.json:
