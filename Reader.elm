@@ -84,6 +84,31 @@ read_string =
                   *> (String.fromList x |> MalString |> succeed)
 
 
+read_symbol : Parser MalVal
+read_symbol =
+  (lower <|> upper <|> symbol)
+    `andThen` \first ->
+                many (lower <|> upper <|> digit <|> symbol)
+                  `andThen` \rest ->
+                              let
+                                str =
+                                  String.fromList <| first :: rest
+                              in
+                                succeed
+                                  <| case str of
+                                      "true" ->
+                                        MalTrue
+
+                                      "false" ->
+                                        MalFalse
+
+                                      "nil" ->
+                                        Nil
+
+                                      _ ->
+                                        MalSymbol str
+
+
 read_atom : Parser MalVal
 read_atom =
   read_number
