@@ -121,3 +121,27 @@ read_form =
     *> read_atom
     `andThen` \x ->
                 succeed x
+
+
+read_list : Parser MalVal
+read_list =
+  char '('
+    *> sepEndBy ignored read_form
+    `andThen` \x -> char ')' *> succeed (MalList x Nil)
+
+
+sepEndBy : Parser x -> Parser res -> Parser (List res)
+sepEndBy sep p =
+  sepBy1 sep p `or` succeed []
+
+
+sepEndBy1 : Parser x -> Parser res -> Parser (List res)
+sepEndBy1 sep p =
+  p
+    `andThen` \x ->
+                (flip always)
+                  `map` sep
+                  `andMap` sepEndBy sep p
+                  `andThen` \xs ->
+                              succeed (x :: xs)
+                                `or` succeed [ x ]
