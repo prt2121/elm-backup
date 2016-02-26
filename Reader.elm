@@ -132,7 +132,7 @@ read_list =
 
 sepEndBy : Parser x -> Parser res -> Parser (List res)
 sepEndBy sep p =
-  sepBy1 sep p `or` succeed []
+  sepEndBy1 sep p `or` succeed []
 
 
 sepEndBy1 : Parser x -> Parser res -> Parser (List res)
