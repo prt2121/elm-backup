@@ -146,9 +146,8 @@ sepEndBy1 : Parser x -> Parser res -> Parser (List res)
 sepEndBy1 sep p =
   p
     `andThen` \x ->
-                ((flip always)
-                  `map` sep
-                  `andMap` sepEndBy sep p
+                (sep
+                  *> sepEndBy sep p
                   `andThen` \xs ->
                               succeed (x :: xs))
                 `or` succeed [ x ]
