@@ -130,6 +130,13 @@ read_list =
     `andThen` \x -> char ')' *> succeed (MalList x Nil)
 
 
+read_vector : Parser MalVal
+read_vector =
+  char '['
+    *> sepEndBy ignored read_form
+    `andThen` \x -> char ']' *> succeed (MalList x Nil)
+
+
 sepEndBy : Parser x -> Parser res -> Parser (List res)
 sepEndBy sep p =
   sepEndBy1 sep p `or` succeed []
