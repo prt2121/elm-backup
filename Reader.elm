@@ -59,15 +59,28 @@ escaped =
 
 read_number : Parser MalVal
 read_number =
-  let
-    stringToMalNum =
-      String.fromList
-        >> String.toInt
-        >> Result.toMaybe
-        >> Maybe.withDefault 0
-        >> MalNumber
-  in
-    Combine.map stringToMalNum <| many1 digit
+  Combine.map stringToMalNum <| many1 digit
+
+
+read_negative_number : Parser MalVal
+read_negative_number =
+  char '-'
+    `andThen` \sign ->
+                many1 digit
+                  `andThen` \n ->
+                              sign
+                                :: n
+                                |> stringToMalNum
+                                |> succeed
+
+
+stringToMalNum : List Char -> Types.MalVal
+stringToMalNum =
+  String.fromList
+    >> String.toInt
+    >> Result.toMaybe
+    >> Maybe.withDefault 0
+    >> MalNumber
 
 
 
@@ -149,5 +162,6 @@ sepEndBy1 sep p =
                 (sep
                   *> sepEndBy sep p
                   `andThen` \xs ->
-                              succeed (x :: xs))
-                `or` succeed [ x ]
+                              succeed (x :: xs)
+                )
+                  `or` succeed [ x ]
