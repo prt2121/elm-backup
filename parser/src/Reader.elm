@@ -7,7 +7,9 @@ import String exposing (toList)
 import Types exposing (..)
 
 
--- read_str :: String -> Result
+-- read_str :: String -> Result MalVal
+-- read_str str =
+--   case parse read_form
 
 
 spaces : Parser ()
@@ -122,6 +124,20 @@ read_symbol =
                                         MalSymbol str
 
 
+
+{- -
+keyword: a keyword is a token that begins with a colon.
+A keyword can just be stored as a string with special unicode prefix like 0x29E
+- TODO: letter
+-}
+-- read_keyword : Parser MalVal
+-- read_keyword =
+--   char ':'
+--     *> many (letter <|> digit <|> symbol)
+--       `andThen` \x ->
+--         succeed <| MalString <| "\x029e" ++ x
+
+
 read_atom : Parser MalVal
 read_atom =
   read_number
@@ -148,6 +164,14 @@ read_vector =
   char '['
     *> sepEndBy ignored read_form
     `andThen` \x -> char ']' *> succeed (MalList x Nil)
+
+
+
+-- read_quasiquote : Parser MalVal
+-- read_quasiquote =
+--   char '`'
+--     *> read_form
+--     `andThen` \x -> succeed (MalList (List MalSymbol "quasiquote", x) Nil)
 
 
 sepEndBy : Parser x -> Parser res -> Parser (List res)
