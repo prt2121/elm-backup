@@ -2,6 +2,7 @@ module Printer (..) where
 
 import Types exposing (..)
 
+
 -- return a string representation of the input
 
 
