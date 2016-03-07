@@ -27,7 +27,10 @@ spaces =
 comment : Parser ()
 comment =
   char ';'
-    *> (skipMany <| noneOf <| toList "\x0D\n")
+    *> (toList "\x0D\n"
+          |> noneOf
+          |> skipMany
+       )
 
 
 ignored : Parser ()
@@ -134,12 +137,17 @@ letter =
 keyword: a keyword is a token that begins with a colon.
 A keyword can just be stored as a string with special unicode prefix like 0x29E
 -}
+
+
 read_keyword : Parser MalVal
 read_keyword =
   char ':'
     *> many (letter <|> digit <|> symbol)
-      `andThen` \x ->
-        succeed <| MalString <| "\x029e" ++ (String.fromList x)
+    `andThen` \x ->
+                "ʞ"
+                  ++ (String.fromList x)
+                  |> MalString
+                  |> succeed
 
 
 read_atom : Parser MalVal

@@ -113,7 +113,7 @@ keywordTestSuite =
     [ test "read_keyword test 1"
         <| assertEqual
             (parse read_keyword ":keyword")
-            ( Ok (MalString "\x029ekeyword"), { input = "", position = 8 } )
+            ( Ok (MalString "ʞkeyword"), { input = "", position = 8 } )
     ]
 
 
