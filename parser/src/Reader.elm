@@ -27,7 +27,7 @@ spaces =
 comment : Parser ()
 comment =
   char ';'
-    *> (skipMany <| noneOf <| toList "\x0D\n")
+    *> (skipMany <| noneOf <| toList "\r\n")
 
 
 ignored : Parser ()
@@ -61,7 +61,7 @@ escaped =
 
 read_number : Parser MalVal
 read_number =
-  Combine.map stringToMalNum <| many1 digit
+  stringToMalNum <$> many1 digit
 
 
 read_negative_number : Parser MalVal
@@ -76,7 +76,7 @@ read_negative_number =
                                 |> succeed
 
 
-stringToMalNum : List Char -> Types.MalVal
+stringToMalNum : List Char -> MalVal
 stringToMalNum =
   String.fromList
     >> String.toInt
