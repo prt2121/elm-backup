@@ -106,6 +106,17 @@ letterTestSuite =
     ]
 
 
+keywordTestSuite : Test
+keywordTestSuite =
+  suite
+    "read_keyword tests"
+    [ test "read_keyword test 1"
+        <| assertEqual
+            (parse read_keyword ":keyword")
+            ( Ok (MalString "\x029ekeyword"), { input = "", position = 8 } )
+    ]
+
+
 all : Test
 all =
   suite
@@ -116,6 +127,7 @@ all =
     , readNumberSuite
     , readNegativeNumberSuite
     , letterTestSuite
+    , keywordTestSuite
     ]
 
 
