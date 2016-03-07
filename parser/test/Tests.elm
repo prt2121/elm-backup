@@ -76,6 +76,21 @@ readNumberSuite =
     ]
 
 
+readNegativeNumberSuite : Test
+readNegativeNumberSuite =
+  suite
+    "read_negative_number tests"
+    [ test "read_negative_number test 1"
+        <| assertEqual
+            (parse read_negative_number "-12")
+            ( Ok (MalNumber -12), { input = "", position = 3 } )
+    , test "read_negative_number test 2"
+        <| assertEqual
+            (parse read_negative_number "-1")
+            ( Ok (MalNumber -1), { input = "", position = 2 } )
+    ]
+
+
 all : Test
 all =
   suite
@@ -84,6 +99,7 @@ all =
     , commentSuite
     , ignoredSuite
     , readNumberSuite
+    , readNegativeNumberSuite
     ]
 
 
