@@ -91,6 +91,21 @@ readNegativeNumberSuite =
     ]
 
 
+letterTestSuite : Test
+letterTestSuite =
+  suite
+    "letter tests"
+    [ test "letter test 1"
+        <| assertEqual
+            (parse letter "test")
+            ( Ok 't', { input = "est", position = 1 } )
+    , test "read_negative_number test 2"
+        <| assertEqual
+            (parse letter "Test")
+            ( Ok 'T', { input = "est", position = 1 } )
+    ]
+
+
 all : Test
 all =
   suite
@@ -100,6 +115,7 @@ all =
     , ignoredSuite
     , readNumberSuite
     , readNegativeNumberSuite
+    , letterTestSuite
     ]
 
 
