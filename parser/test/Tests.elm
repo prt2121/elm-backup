@@ -99,7 +99,7 @@ letterTestSuite =
         <| assertEqual
             (parse letter "test")
             ( Ok 't', { input = "est", position = 1 } )
-    , test "read_negative_number test 2"
+    , test "letter test 2"
         <| assertEqual
             (parse letter "Test")
             ( Ok 'T', { input = "est", position = 1 } )
@@ -125,6 +125,40 @@ keywordTestSuite =
     ]
 
 
+readListSuite : Test
+readListSuite =
+  suite
+    "read_list tests"
+    [ test "read_list test 1"
+        <| assertEqual
+            (parse read_list "(1 2)")
+            ( Ok (MalList [ MalNumber 1, MalNumber 2 ] Nil), { input = "", position = 5 } )
+    , test "read_list test 2"
+        <| assertEqual
+            (parse read_list "(3 A B 4)")
+            ( Ok (MalList [ MalNumber 3, MalSymbol "A", MalSymbol "B", MalNumber 4 ] Nil), { input = "", position = 9 } )
+    , test "read_list test 3"
+        <| assertEqual
+            (parse read_list "(:@cool! A ?) XXX")
+            ( Ok (MalList [ MalString "ʞ@cool!", MalSymbol "A", MalSymbol "?" ] Nil), { input = " XXX", position = 13 } )
+    ]
+
+
+quasiquoteTestSuite : Test
+quasiquoteTestSuite =
+  suite
+    "quasiquote tests"
+    [ test "quasiquote test 1"
+        <| assertEqual
+            (parse read_quasiquote "`test")
+            ( Ok (MalList [MalSymbol "quasiquote", MalSymbol "test"] Nil), { input = "", position = 5 } )
+    , test "quasiquote test 2"
+        <| assertEqual
+            (parse read_quasiquote "`:@cool! yo")
+            ( Ok (MalList [MalSymbol "quasiquote", MalString "ʞ@cool!"] Nil), { input = " yo", position = 8 } )
+    ]
+
+
 all : Test
 all =
   suite
@@ -136,6 +170,8 @@ all =
     , readNegativeNumberSuite
     , letterTestSuite
     , keywordTestSuite
+    , readListSuite
+    , quasiquoteTestSuite
     ]
 
 

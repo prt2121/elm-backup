@@ -154,6 +154,8 @@ read_atom : Parser MalVal
 read_atom =
   read_number
     <|> read_string
+    <|> read_keyword
+    <|> read_symbol
 
 
 read_form : Parser MalVal
@@ -179,8 +181,8 @@ read_vector =
 
 
 
--- read_quasiquote : Parser MalVal
--- read_quasiquote =
---   char '`'
---     *> read_form
---     `andThen` \x -> succeed (MalList (List MalSymbol "quasiquote", x) Nil)
+read_quasiquote : Parser MalVal
+read_quasiquote =
+  char '`'
+    *> read_form
+    `andThen` \x -> succeed (MalList [MalSymbol "quasiquote", x] Nil)
