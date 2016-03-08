@@ -128,6 +128,19 @@ readListSuite =
     ]
 
 
+quoteTestSuite : Test
+quoteTestSuite =
+  suite
+    "quote tests"
+    [ test "quote test 1"
+        <| (parse read_quote "'test")
+        `isEqualTo` ( Ok (MalList [ MalSymbol "quote", MalSymbol "test" ] Nil), { input = "", position = 5 } )
+    , test "quote test 2"
+        <| (parse read_quote "':@cool! yo")
+        `isEqualTo` ( Ok (MalList [ MalSymbol "quote", MalString "ʞ@cool!" ] Nil), { input = " yo", position = 8 } )
+    ]
+
+
 quasiquoteTestSuite : Test
 quasiquoteTestSuite =
   suite
@@ -138,6 +151,32 @@ quasiquoteTestSuite =
     , test "quasiquote test 2"
         <| (parse read_quasiquote "`:@cool! yo")
         `isEqualTo` ( Ok (MalList [ MalSymbol "quasiquote", MalString "ʞ@cool!" ] Nil), { input = " yo", position = 8 } )
+    ]
+
+
+unquoteTestSuite : Test
+unquoteTestSuite =
+  suite
+    "unquote tests"
+    [ test "unquote test 1"
+        <| (parse read_unquote "~test")
+        `isEqualTo` ( Ok (MalList [ MalSymbol "unquote", MalSymbol "test" ] Nil), { input = "", position = 5 } )
+    , test "unquote test 2"
+        <| (parse read_unquote "~:@cool! yo")
+        `isEqualTo` ( Ok (MalList [ MalSymbol "unquote", MalString "ʞ@cool!" ] Nil), { input = " yo", position = 8 } )
+    ]
+
+
+derefTestSuite : Test
+derefTestSuite =
+  suite
+    "deref tests"
+    [ test "deref test 1"
+        <| (parse read_deref "@123")
+        `isEqualTo` ( Ok (MalList [ MalSymbol "deref", MalNumber 123 ] Nil), { input = "", position = 4 } )
+    , test "deref test 2"
+        <| (parse read_deref "@home yo!")
+        `isEqualTo` ( Ok (MalList [ MalSymbol "deref", MalSymbol "home" ] Nil), { input = " yo!", position = 5 } )
     ]
 
 
@@ -153,7 +192,10 @@ all =
     , letterTestSuite
     , keywordTestSuite
     , readListSuite
+    , quoteTestSuite
     , quasiquoteTestSuite
+    , unquoteTestSuite
+    , derefTestSuite
     ]
 
 

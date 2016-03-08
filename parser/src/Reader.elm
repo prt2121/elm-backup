@@ -180,9 +180,29 @@ read_vector =
     `andThen` \x -> char ']' *> succeed (MalList x Nil)
 
 
+read_quote : Parser MalVal
+read_quote =
+  char '\''
+    *> read_form
+    `andThen` \x -> succeed (MalList [ MalSymbol "quote", x ] Nil)
+
 
 read_quasiquote : Parser MalVal
 read_quasiquote =
   char '`'
     *> read_form
-    `andThen` \x -> succeed (MalList [MalSymbol "quasiquote", x] Nil)
+    `andThen` \x -> succeed (MalList [ MalSymbol "quasiquote", x ] Nil)
+
+
+read_unquote : Parser MalVal
+read_unquote =
+  char '~'
+    *> read_form
+    `andThen` \x -> succeed (MalList [ MalSymbol "unquote", x ] Nil)
+
+
+read_deref : Parser MalVal
+read_deref =
+  char '@'
+    *> read_form
+    `andThen` \x -> succeed (MalList [ MalSymbol "deref", x ] Nil)
