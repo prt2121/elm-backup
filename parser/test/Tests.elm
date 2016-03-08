@@ -114,6 +114,14 @@ keywordTestSuite =
         <| assertEqual
             (parse read_keyword ":keyword")
             ( Ok (MalString "ʞkeyword"), { input = "", position = 8 } )
+    , test "read_keyword test 2"
+        <| assertEqual
+            (parse read_keyword ":123abc")
+            ( Ok (MalString "ʞ123abc"), { input = "", position = 7 } )
+    , test "read_keyword test 3"
+        <| assertEqual
+            (parse read_keyword ":@cool! yo")
+            ( Ok (MalString "ʞ@cool!"), { input = " yo", position = 7 } )
     ]
 
 
