@@ -158,10 +158,23 @@ read_atom =
     <|> read_symbol
 
 
+read_macro : Parser MalVal
+read_macro =
+  read_quote
+    <|> read_quasiquote
+    <|> read_unquote
+    <|> read_deref
+    -- <|> read_with_meta
+    -- <|> try read_splice_unquote
+
+-- TODO https://github.com/elm-lang/elm-compiler/issues/873
 read_form : Parser MalVal
 read_form =
   ignored
     *> read_atom
+    -- <|> read_macro
+    -- <|> read_list
+    -- <|> read_vector
     `andThen` \x ->
                 succeed x
 
@@ -206,3 +219,10 @@ read_deref =
   char '@'
     *> read_form
     `andThen` \x -> succeed (MalList [ MalSymbol "deref", x ] Nil)
+
+
+read_with_meta : Parser MalVal
+read_with_meta =
+  char '^'
+    *> sequence [ read_form, read_form ]
+    `andThen` \ls -> succeed <| MalList (MalSymbol "with-meta" :: ls) Nil

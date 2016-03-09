@@ -180,6 +180,16 @@ derefTestSuite =
     ]
 
 
+-- metaTestSuite : Test
+-- metaTestSuite =
+--   suite
+--     "meta tests"
+--     [ test "meta test 1"
+--         <| (parse read_with_meta "^123 (1 2)")
+--         `isEqualTo` ( Ok (MalList [ MalSymbol "with-meta", MalNumber 123,  (MalList [ MalNumber 1, MalNumber 2 ] Nil)] Nil), { input = "", position = 9 } )
+--     ]
+
+
 all : Test
 all =
   suite
@@ -196,6 +206,7 @@ all =
     , quasiquoteTestSuite
     , unquoteTestSuite
     , derefTestSuite
+    -- , metaTestSuite
     ]
 
 
